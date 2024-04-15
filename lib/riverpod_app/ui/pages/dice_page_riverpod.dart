@@ -1,15 +1,17 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lion_sabak_04/providers/state_notifier_provider.dart';
-import 'package:lion_sabak_04/ui/widgets/dice_widget.dart';
+import 'package:lion_sabak_04/common/widgets/dice_widget.dart';
+import 'package:lion_sabak_04/riverpod_app/providers/dice_page_provider.dart';
 
-class DicePageWithRiverpod extends ConsumerWidget {
-  const DicePageWithRiverpod({super.key});
+class DicePageRiverpod extends ConsumerWidget {
+  const DicePageRiverpod({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final diceOne = ref.watch(diceOneProvider);
-    final diceTwo = ref.watch(diceTwoProvider);
+    log('DicePageRiverpod');
+    final state = ref.watch(dicePageNotifierProvider);
 
     return Scaffold(
       backgroundColor: const Color(0xffEE5A46),
@@ -25,15 +27,14 @@ class DicePageWithRiverpod extends ConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 18.0),
           child: InkWell(
             onTap: () {
-              ref.read(diceOneProvider.notifier).throwDice();
-              ref.read(diceTwoProvider.notifier).throwDice();
+              ref.read(dicePageNotifierProvider.notifier).throwDices();
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                DiceWidget(diceNumber: diceOne),
+                DiceWidget(diceNumber: state.one),
                 const SizedBox(width: 20),
-                DiceWidget(diceNumber: diceTwo),
+                DiceWidget(diceNumber: state.two),
               ],
             ),
           ),

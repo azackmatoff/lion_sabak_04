@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:lion_sabak_04/services/dice_services.dart';
-import 'package:lion_sabak_04/ui/widgets/dice_widget.dart';
+import 'package:get/get.dart';
 
-class DicePage extends StatefulWidget {
-  const DicePage({super.key});
+import 'package:lion_sabak_04/common/widgets/dice_widget.dart';
+import 'package:lion_sabak_04/getx_app/contollers/getx_dice_page_controller.dart';
 
-  @override
-  DicePageState createState() => DicePageState();
-}
+class GetxDicePage extends StatelessWidget {
+  GetxDicePage({super.key});
 
-class DicePageState extends State<DicePage> {
-  int dice1 = 6;
-  int dice2 = 3;
+  final controller = Get.put(GetxDicePageController());
 
   @override
   Widget build(BuildContext context) {
@@ -28,27 +24,24 @@ class DicePageState extends State<DicePage> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 18.0),
           child: InkWell(
-            onTap: throwDice,
+            // onTap: () {
+            //   controller.throwDices();
+            // },
+            onTap: () => controller.throwDices(),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                DiceWidget(diceNumber: dice1),
+                Obx(() => DiceWidget(diceNumber: controller.diceOne.value)),
                 const SizedBox(width: 20),
-                DiceWidget(diceNumber: dice2),
+                Obx(() {
+                  return DiceWidget(diceNumber: controller.diceTwo.value);
+                }),
               ],
             ),
           ),
         ),
       ),
     );
-  }
-
-  void throwDice() {
-    dice1 = DiceServices.throwDice1();
-
-    dice2 = DiceServices.throwDice2();
-
-    setState(() {});
   }
 }
 
