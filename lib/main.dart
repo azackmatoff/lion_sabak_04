@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
+import 'package:lion_sabak_04/bloc_app/bloc_app/bloc/dice_page_bloc.dart';
+import 'package:lion_sabak_04/bloc_app/bloc_app/ui/bloc_dice_page.dart';
 import 'package:lion_sabak_04/bloc_app/cubit_app/cubit/dice_page_cubit.dart';
 import 'package:lion_sabak_04/bloc_app/cubit_app/ui/cubit_dice_page.dart';
 import 'package:lion_sabak_04/getx_app/ui/pages/getx_dice_page.dart';
@@ -11,10 +13,11 @@ import 'package:lion_sabak_04/riverpod_app/ui/pages/dice_page_with_riverpod.dart
 import 'package:lion_sabak_04/riverpod_app/ui/pages/new_dice_page_with_riverpod.dart';
 
 void main() {
-  runAppWithRiverpod(isNew: false);
+  // runAppWithRiverpod(isNew: false);
   // runAppWithFlutter();
   // runAppWithGetx();
-  // runAppWithBloc();
+  // runAppWithCubit();
+  runAppWithBloc();
 }
 
 void runAppWithFlutter() {
@@ -31,6 +34,10 @@ void runAppWithRiverpod({required bool isNew}) {
 
 void runAppWithGetx() {
   runApp(const MyGetxApp());
+}
+
+void runAppWithCubit() {
+  runApp(const MyCubitApp());
 }
 
 void runAppWithBloc() {
@@ -99,8 +106,8 @@ class MyGetxApp extends StatelessWidget {
 }
 
 /// bul bLoc menen ishtegen prilojenie
-class MyBlocApp extends StatelessWidget {
-  const MyBlocApp({super.key});
+class MyCubitApp extends StatelessWidget {
+  const MyCubitApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -113,6 +120,26 @@ class MyBlocApp extends StatelessWidget {
       home: BlocProvider(
         create: (context) => DicePageCubit(),
         child: const CubitDicePage(),
+      ),
+    );
+  }
+}
+
+/// bul bLoc menen ishtegen prilojenie
+class MyBlocApp extends StatelessWidget {
+  const MyBlocApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+      home: BlocProvider(
+        create: (context) => DicePageBloc(),
+        child: const BlocDicePage(),
       ),
     );
   }
